@@ -1,10 +1,20 @@
 var express = require('express');
 
 var app = express();
+var PORT = process.env.PORT || 3000;
+
+// Common notation for express middlewear. 
+app.use(function(req, res, next){
+	if (req.protocol === 'http') {
+		next()
+	} else {
+		res.redirect('http://' + req.hostname + req.url);
+	}
+})
 
 app.use(express.static('public'));
 
-app.listen(3000, function (){
-	console.log('Express server on port 3000');
+app.listen(PORT, function (){
+	console.log('Express server on PORT ' + PORT);
 })
 
